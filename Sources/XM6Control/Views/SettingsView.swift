@@ -16,6 +16,17 @@ struct SettingsView: View {
             }
 
             Section {
+                LabeledContent("Desktop & Notification Center") {
+                    Text("Edit Widgets\u{2026}, then XM6 Control")
+                        .foregroundStyle(.secondary)
+                }
+            } header: {
+                Text("Widget")
+            } footer: {
+                Text("Right-click the desktop or open Notification Center and choose Edit Widgets to add the XM6 widget.")
+            }
+
+            Section {
                 Toggle("Write protocol log", isOn: $controller.protocolLoggingEnabled)
                 LabeledContent("Protocol", value: protocolText)
             } header: {

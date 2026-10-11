@@ -6,10 +6,12 @@ import SonyHeadphonesKit
 struct XM6ControlApp: App {
     @StateObject private var controller: HeadphonesController
     @StateObject private var settings = AppSettings()
+    private let widgetBridge: WidgetBridge
 
     init() {
         let controller = HeadphonesController()
         _controller = StateObject(wrappedValue: controller)
+        widgetBridge = WidgetBridge(controller: controller)
 
         // `--demo` fills in a connected state without Bluetooth, for working on the
         // interface away from the headphones.

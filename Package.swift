@@ -6,6 +6,10 @@ let package = Package(
     platforms: [
         .macOS(.v26)
     ],
+    products: [
+        .library(name: "SonyHeadphonesKit", targets: ["SonyHeadphonesKit"]),
+        .library(name: "XM6Shared", targets: ["XM6Shared"]),
+    ],
     targets: [
         .target(
             name: "SonyHeadphonesKit",
@@ -14,9 +18,14 @@ let package = Package(
                 .linkedFramework("IOBluetooth")
             ]
         ),
+        // Snapshot and command mailbox shared by the app and its WidgetKit extension.
+        .target(
+            name: "XM6Shared",
+            swiftSettings: [.swiftLanguageMode(.v5)]
+        ),
         .executableTarget(
             name: "XM6Control",
-            dependencies: ["SonyHeadphonesKit"],
+            dependencies: ["SonyHeadphonesKit", "XM6Shared"],
             exclude: ["Resources"],
             swiftSettings: [.swiftLanguageMode(.v5)]
         ),
