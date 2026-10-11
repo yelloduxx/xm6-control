@@ -53,11 +53,19 @@ On first launch macOS asks for Bluetooth permission. Click **Allow**. Make sure 
 
 ### Window or menu bar
 
+<p align="center">
+  <img src="docs/menu-bar.png" alt="The menu bar panel with noise control, listening mode and equalizer" width="330">
+</p>
+
 By default XM6 Control behaves like a normal Mac app: a Dock icon, and a window when you open it. The menu bar panel is always there too, so quick changes never need the window.
 
 If you would rather it stay out of the way entirely, turn on **Show only in the menu bar** in Settings (⌘,). That drops the Dock icon and the app-switcher entry, and the menu bar panel becomes the whole interface. The panel's gear button opens the same Settings window, so turning it off brings the window and Dock icon back.
 
 ### Widget
+
+<p align="center">
+  <img src="docs/widgets.png" alt="Small, medium and large XM6 widgets on the desktop" width="720">
+</p>
 
 Right-click the desktop (or open Notification Center) and choose **Edit Widgets**, then pick **XM6 Control**. The small widget shows battery and the noise mode with three buttons. The medium one adds the product shot and a listening mode switch. The large one adds the equalizer presets.
 
