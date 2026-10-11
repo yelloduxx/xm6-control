@@ -10,9 +10,19 @@ struct DevicesSection: View {
                 ForEach(devices) { device in
                     row(device)
                 }
-            } else if controller.initialStateTimedOut {
-                Text("The headphones didn't report their device list.")
-                    .foregroundStyle(.secondary)
+            } else if controller.deviceListTimedOut || controller.initialStateTimedOut {
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Device list unavailable")
+                        Text("The headphones didn't report their connected devices. This can happen when connecting to two devices is turned off.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    Spacer()
+                    Button("Retry") { controller.refreshDeviceList() }
+                        .buttonStyle(.glass)
+                        .controlSize(.small)
+                }
             } else {
                 LoadingRow()
             }
