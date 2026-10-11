@@ -61,6 +61,7 @@ public final class HeadphonesController: ObservableObject {
     private var connectRetryCount = 0
     private var connectTarget: (address: String, name: String?)?
     private var didApplyConnectDefaults = false
+    private var isDemo = false
 
     public init() {
         protocolLoggingEnabled = UserDefaults.standard.bool(forKey: "protocolLoggingEnabled")
@@ -450,6 +451,7 @@ public final class HeadphonesController: ObservableObject {
     // MARK: - Outbound queue
 
     private func enqueue(_ payload: [UInt8], type: SonyMessageType = .command1) {
+        guard !isDemo else { return }
         outgoingQueue.append((type, payload))
         if !awaitingAck {
             sendNextQueuedCommand()
@@ -476,5 +478,32 @@ public final class HeadphonesController: ObservableObject {
         // since it won't match the (by-then-advanced) expected sequence number.
         awaitingAck = false
         sendNextQueuedCommand()
+    }
+}
+
+// MARK: - Demo
+
+extension HeadphonesController {
+    /// Fills in a plausible connected state with no Bluetooth at all, so the interface
+    /// can be built and screenshotted without the headphones. Setters keep working
+    /// optimistically; nothing is sent.
+    public func loadDemoState() {
+        isDemo = true
+        deviceName = "WH-1000XM6"
+        protocolVersion = .v2
+        ambientSound = AmbientSoundState(mode: .noiseCancelling, level: 14)
+        battery = BatteryStatus(level: 72, isCharging: false)
+        speakToChatEnabled = false
+        speakToChatConfig = SpeakToChatConfigState(sensitivity: .auto, timeout: .standard)
+        automaticPowerOff = .off
+        pauseWhenTakenOff = true
+        equalizer = EqualizerState(presetCode: EqualizerPreset.custom.rawValue, bands: [0, 2, 3, 1, 0, -1, 0, 2, 3, 4])
+        listeningMode = .standard
+        bgmRoomSize = .middle
+        devices = [
+            MultipointDevice(macAddress: "00:00:00:00:00:01", name: "MacBook Pro", connectedStatus: 1, isPlayback: true),
+            MultipointDevice(macAddress: "00:00:00:00:00:02", name: "iPhone 17 Pro", connectedStatus: 1, isPlayback: false),
+        ]
+        connectionState = .connected
     }
 }
