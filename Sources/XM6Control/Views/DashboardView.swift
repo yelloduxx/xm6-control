@@ -18,6 +18,7 @@ struct DashboardView: View {
         }
         .formStyle(.grouped)
         .scrollEdgeEffectStyle(.soft, for: .top)
+        .fitsWindowToContent()
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
                 Button("Refresh", systemImage: "arrow.clockwise") {
