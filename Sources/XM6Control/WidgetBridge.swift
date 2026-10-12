@@ -18,9 +18,11 @@ final class WidgetBridge {
 
         // `objectWillChange` fires before the value lands; hopping a runloop turn
         // reads the new state, and the debounce folds a burst of initial replies into
-        // one widget reload.
+        // one widget reload. That matters because macOS grants roughly one reload per
+        // five seconds while the app is in front; a second one inside that window is
+        // deferred to its end.
         controller.objectWillChange
-            .debounce(for: .milliseconds(250), scheduler: RunLoop.main)
+            .debounce(for: .milliseconds(100), scheduler: RunLoop.main)
             .sink { [weak self] in self?.publish() }
             .store(in: &subscriptions)
 
