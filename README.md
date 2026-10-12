@@ -47,7 +47,7 @@ cd xm6-control
 open ".build/XM6 Control.app"
 ```
 
-That's it. The script generates the Xcode project, builds the app with its widget extension, generates the app icon, and signs the bundle. Drag `XM6 Control.app` to `/Applications` if you want it permanent, and add it to **System Settings → General → Login Items** to start it at login.
+That's it. The script generates the Xcode project, builds the app with its widget extension, generates the app icon, and signs the bundle. Drag `XM6 Control.app` to `/Applications` if you want it permanent, and turn on **Open at login** in Settings (⌘,) to start it when you log in.
 
 On first launch macOS asks for Bluetooth permission. Click **Allow**. Make sure the headphones are powered on and connected as an audio device before hitting **Try Again** if the first connection races.
 

@@ -1,4 +1,5 @@
 import SwiftUI
+import ServiceManagement
 import SonyHeadphonesKit
 
 /// App preferences, in the standard ⌘, window rather than as checkboxes under the
@@ -9,6 +10,27 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
+            Section {
+                Toggle("Open at login", isOn: Binding(
+                    get: { settings.launchAtLogin },
+                    set: { settings.setLaunchAtLogin($0) }
+                ))
+            } footer: {
+                if settings.launchAtLoginStatus == .requiresApproval {
+                    HStack {
+                        Text("Allow XM6 Control in Login Items to finish turning this on.")
+                        Button("Open Login Items") {
+                            SMAppService.openSystemSettingsLoginItems()
+                        }
+                        .buttonStyle(.link)
+                    }
+                } else if let error = settings.launchAtLoginError {
+                    Text(error).foregroundStyle(.red)
+                } else {
+                    Text("Starts XM6 Control when you log in, so the menu bar panel and the widget are ready.")
+                }
+            }
+
             Section {
                 Toggle("Show only in the menu bar", isOn: $settings.menuBarOnly)
             } footer: {
